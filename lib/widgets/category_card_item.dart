@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/models/category_model.dart';
 
-class CategoryCard extends StatelessWidget {
-  const CategoryCard({super.key, required this.categoryModel});
+class CategoryCardItem extends StatelessWidget {
+  const CategoryCardItem({super.key, required this.categoryModel});
 
   final CategoryModel categoryModel;
   @override
