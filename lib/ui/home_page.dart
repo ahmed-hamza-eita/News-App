@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/widgets/category_card_item.dart';
+import 'package:news_app/widgets/news_item.dart';
 
 import '../models/category_model.dart';
 import '../widgets/categories_list_view.dart';
@@ -30,7 +31,7 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
-        body: const CategoriesListView());
+        body: const NewsItem(),);
   }
 }
 
