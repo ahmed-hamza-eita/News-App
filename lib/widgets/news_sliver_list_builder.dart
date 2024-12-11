@@ -1,45 +1,49 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/widgets/progress_loading.dart';
 
-import '../models/article_model.dart';
 import '../services/news_service.dart';
 import 'news_sliver_list.dart';
 
-class NewsSliverListBuilder extends StatefulWidget {
+class NewsSliverListBuilder extends StatelessWidget {
   const NewsSliverListBuilder({
     super.key,
   });
 
   @override
-  State<NewsSliverListBuilder> createState() => _NewsSliverListBuilderState();
-}
-
-class _NewsSliverListBuilderState extends State<NewsSliverListBuilder> {
-  bool isLoading = true;
-  List<ArticleModel> articles = [];
-  @override
-  initState() {
-    super.initState();
-    getGeneralNew();
-  }
-
-  Future<void> getGeneralNew() async {
-    articles = await NewsService(Dio()).getGeneralNews();
-    isLoading = false;
-
-    setState(() {});
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? const SliverToBoxAdapter(
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          )
-        : NewsSliverList(
-            articles: articles,
-          );
+    return FutureBuilder(
+        future: NewsService((Dio())).getGeneralNews(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return NewsSliverList(articles: snapshot.data!);
+          } else if (snapshot.hasError) {
+            return const SliverToBoxAdapter(
+              child: Center(
+                child: Text('oops! something went wrong'),
+              ),
+            );
+          } else {
+            return const SliverToBoxAdapter(
+              child: ProgressLoading(),
+            );
+          }
+        });
+
+    // return isLoading
+    //     ? const SliverToBoxAdapter(
+    //         child: Center(
+    //           child: CircularProgressIndicator(),
+    //         ),
+    //       )
+    //     : articles.isNotEmpty
+    //         ? NewsSliverList(
+    //             articles: articles,
+    //           )
+    //         : const SliverToBoxAdapter(
+    //             child: Center(
+    //               child: Text('oops! something went wrong'),
+    //             ),
+    //           );
   }
 }

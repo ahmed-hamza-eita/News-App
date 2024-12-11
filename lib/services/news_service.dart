@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+
 import '../models/article_model.dart';
 
 class NewsService {
@@ -11,14 +12,7 @@ class NewsService {
       var response = await dio.get(
           'https://newsapi.org/v2/top-headlines?apikey=5619cce537c7439cb56deb903366b2a8&country=us&category=general');
 
-      print('API Response: ${response.data}'); // Print the entire response
-
       Map<String, dynamic> jsonData = response.data;
-
-      if (jsonData['articles'] == null) {
-        print('No articles key found in the response');
-        return [];
-      }
 
       List<dynamic> articles = jsonData['articles'];
 
@@ -38,4 +32,5 @@ class NewsService {
       print('Error fetching articles: $e');
       return [];
     }
-  }}
+  }
+}
