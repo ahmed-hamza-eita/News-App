@@ -9,8 +9,10 @@ import 'news_sliver_list.dart';
 class NewsSliverListBuilder extends StatefulWidget {
   const NewsSliverListBuilder({
     super.key,
+    required this.category,
   });
 
+  final String category;
   @override
   State<NewsSliverListBuilder> createState() => _NewsSliverListBuilderState();
 }
@@ -21,7 +23,7 @@ class _NewsSliverListBuilderState extends State<NewsSliverListBuilder> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    future = NewsService((Dio())).getGeneralNews();
+    future = NewsService((Dio())).getGeneralNews(category: widget.category);
   }
 
   @override
@@ -39,7 +41,7 @@ class _NewsSliverListBuilderState extends State<NewsSliverListBuilder> {
             );
           } else {
             return const SliverToBoxAdapter(
-              child: ProgressLoading(),
+              child: Center(child: ProgressLoading()),
             );
           }
         });
