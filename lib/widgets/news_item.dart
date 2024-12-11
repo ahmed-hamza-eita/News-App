@@ -15,7 +15,7 @@ class NewsItem extends StatelessWidget {
         ClipRRect(
             borderRadius: BorderRadius.circular(6),
             child: Image.network(
-              article.image!.isNotEmpty ? article.image! : "",
+              article.image!,
               height: 200,
               width: double.infinity,
               fit: BoxFit.cover,
