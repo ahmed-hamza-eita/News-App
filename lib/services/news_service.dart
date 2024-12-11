@@ -9,22 +9,33 @@ class NewsService {
   Future<List<ArticleModel>> getGeneralNews() async {
     try {
       var response = await dio.get(
-          "https://newsapi.org/v2/top-headlines?apikey=5619cce537c7439cb56deb903366b2a8&country=us&category=general");
+          'https://newsapi.org/v2/top-headlines?apikey=5619cce537c7439cb56deb903366b2a8&country=us&category=general');
+
+      print('API Response: ${response.data}'); // Print the entire response
 
       Map<String, dynamic> jsonData = response.data;
+
+      if (jsonData['articles'] == null) {
+        print('No articles key found in the response');
+        return [];
+      }
+
       List<dynamic> articles = jsonData['articles'];
 
-      List<ArticleModel> articleList = articles.map((article) {
-        return ArticleModel(
-          title: article['title'],
-          subTitle: article['description'],
-          image: article['urlToImage'],
-        );
-      }).toList();
+      List<ArticleModel> articlesList = [];
 
-      return articleList;
+      for (var article in articles) {
+        ArticleModel articleModel = ArticleModel(
+          image: article['urlToImage'] ?? '',
+          title: article['title'] ?? 'No title',
+          subTitle: article['description'] ?? 'No description',
+        );
+        articlesList.add(articleModel);
+      }
+
+      return articlesList;
     } catch (e) {
+      print('Error fetching articles: $e');
       return [];
     }
-  }
-}
+  }}
