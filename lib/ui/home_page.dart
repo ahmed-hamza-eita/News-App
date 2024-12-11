@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:news_app/widgets/categories_list_view.dart';
 import 'package:news_app/widgets/news_sliver_list.dart';
 
+import '../widgets/news_sliver_list_builder.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -38,7 +40,7 @@ class HomePage extends StatelessWidget {
               SliverToBoxAdapter(
                 child: SizedBox(height: 16),
               ),
-              NewsSliverList()
+              NewsSliverListBuilder()
             ],
           ),
         )
@@ -57,3 +59,4 @@ class HomePage extends StatelessWidget {
         );
   }
 }
+
